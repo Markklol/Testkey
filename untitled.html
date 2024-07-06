@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Key Management</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>Key Management</h2>
+    <label for="newKey">New Key:</label>
+    <input type="text" id="newKey" name="newKey">
+    <button onclick="generateKey()">Random Key</button>
+    <button onclick="updateKey()">Update Key</button>
+
+    <script>
+        function generateKey() {
+            var randomKey = Math.random().toString(36).substr(2, 8); // Generate random alphanumeric key
+            document.getElementById("newKey").value = randomKey;
+        }
+
+        function updateKey() {
+            var newKey = document.getElementById("newKey").value;
+            $.ajax({
+                url: 'http://your-server-endpoint/updatekey',
+                type: 'POST',
+                data: { key: newKey },
+                success: function(response) {
+                    alert('Key updated successfully!');
+                },
+                error: function(xhr, status, error) {
+                    alert('Error updating key: ' + error);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
